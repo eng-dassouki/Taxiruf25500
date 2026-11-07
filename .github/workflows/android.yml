@@ -60,3 +60,24 @@ jobs:
         with:
           name: Taxiruf-APK
           path: Taxiruf.apk
+
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: Taxiruf-APK
+          path: out
+      - name: Release veroeffentlichen
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          ls -la out
+          APK=$(find out -name '*.apk' | head -1)
+          cp "$APK" Taxiruf.apk
+          gh release delete latest --repo "$GITHUB_REPOSITORY" --cleanup-tag -y || true
+          gh release create latest Taxiruf.apk --repo "$GITHUB_REPOSITORY" --title "Taxiruf 25500 App" --notes "Aktuelle Android-App" --latest
