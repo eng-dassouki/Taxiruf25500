@@ -141,6 +141,30 @@ jobs:
           mkdir -p android/app/src/main/res/xml
           echo '<?xml version="1.0" encoding="utf-8"?><paths xmlns:android="http://schemas.android.com/apk/res/android"><external-path name="my_images" path="."/><cache-path name="my_cache_images" path="."/></paths>' > android/app/src/main/res/xml/file_paths.xml
 
+      - name: Taxi-Ton fuer Push (Kanal taxi_beep)
+        run: |
+          mkdir -p android/app/src/main/res/raw
+          python3 - <<'PYEOF'
+          import math,struct,wave
+          sr=22050; out=[]
+          def add(f,t0,d,g,sq=False):
+              for i in range(int(d*sr)):
+                  t=i/sr; env=min(1,t/0.01)*max(0,1-t/d)**(0.3 if sq else 1)
+                  v=math.sin(2*math.pi*f*t)
+                  if sq: v=1 if v>0 else -1
+                  k=int(t0*sr)+i
+                  while len(out)<=k: out.append(0)
+                  out[k]+=v*env*g
+          for t0,d in ((0,0.17),(0.24,0.22)):
+              add(392,t0,d,0.22,True); add(494,t0,d,0.22,True)
+          for f,t0,d in ((784,0.62,0.5),(988,0.74,0.5),(1175,0.86,0.55),(1568,1.0,1.1)):
+              add(f,t0,d,0.35); add(f*2.01,t0,d*0.5,0.1)
+          m=max(abs(x) for x in out)
+          w=wave.open('android/app/src/main/res/raw/taxi_beep.wav','wb'); w.setnchannels(1); w.setsampwidth(2); w.setframerate(sr)
+          w.writeframes(b''.join(struct.pack('<h',int(x/m*0.8*32767)) for x in out)); w.close()
+          PYEOF
+          ls -la android/app/src/main/res/raw
+
       - name: Debug-APK bauen
         working-directory: android
         run: ./gradlew assembleDebug --no-daemon
