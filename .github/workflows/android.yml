@@ -180,7 +180,11 @@ jobs:
           $ANDROID_HOME/build-tools/$(ls $ANDROID_HOME/build-tools | sort -V | tail -1)/apksigner verify --print-certs android/app/build/outputs/apk/debug/app-debug.apk | grep -i "SHA-1" | sed "s/^/::notice::APKSIG-/"
 
       - name: APK umbenennen
-        run: cp android/app/build/outputs/apk/debug/app-debug.apk Taxiruf.apk
+        run: |
+          BT=$ANDROID_HOME/build-tools/$(ls $ANDROID_HOME/build-tools | sort -V | tail -1)
+          $BT/zipalign -f -p 4 android/app/build/outputs/apk/debug/app-debug.apk aligned.apk
+          $BT/apksigner sign --ks $HOME/.android/debug.keystore --ks-pass pass:android --key-pass pass:android --ks-key-alias androiddebugkey --out Taxiruf.apk aligned.apk
+          $BT/apksigner verify --print-certs Taxiruf.apk | grep -i "SHA-1" | sed "s/^/::notice::FINAL-/"
 
       - uses: actions/upload-artifact@v4
         with:
