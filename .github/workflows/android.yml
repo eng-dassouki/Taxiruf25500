@@ -38,6 +38,17 @@ jobs:
           fi
           sed -i 's/versionCode 1/versionCode '$GITHUB_RUN_NUMBER'/' android/app/build.gradle
 
+      - name: Push-Konfiguration
+        run: |
+          M=android/app/src/main/AndroidManifest.xml
+          R=android/app/src/main/res
+          if [ -f google-services.json ]; then cp google-services.json android/app/google-services.json; echo "google-services.json gefunden"; else echo "KEINE google-services.json - Push-Nachrichten sind dann aus"; fi
+          mkdir -p $R/drawable $R/values
+          if [ -f ic_stat_taxi.png ]; then cp ic_stat_taxi.png $R/drawable/ic_stat_taxi.png; fi
+          echo '<?xml version="1.0" encoding="utf-8"?><resources><color name="ds_red">#C8102E</color></resources>' > $R/values/ds_colors.xml
+          sed -i 's#</application>#<meta-data android:name="com.google.firebase.messaging.default_notification_icon" android:resource="@drawable/ic_stat_taxi"/><meta-data android:name="com.google.firebase.messaging.default_notification_color" android:resource="@color/ds_red"/><meta-data android:name="com.google.firebase.messaging.default_notification_channel_id" android:value="taxi"/></application>#' $M
+          sed -i 's#<application#<uses-permission android:name="android.permission.POST_NOTIFICATIONS"/><application#' $M
+
       - name: Debug-APK bauen
         working-directory: android
         run: ./gradlew assembleDebug --no-daemon
