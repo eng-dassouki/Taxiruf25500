@@ -175,6 +175,10 @@ jobs:
         working-directory: android
         run: ./gradlew assembleDebug --no-daemon -Pandroid.injected.signing.store.file=$HOME/.android/debug.keystore -Pandroid.injected.signing.store.password=android -Pandroid.injected.signing.key.alias=androiddebugkey -Pandroid.injected.signing.key.password=android
 
+      - name: Signatur anzeigen
+        run: |
+          $ANDROID_HOME/build-tools/$(ls $ANDROID_HOME/build-tools | sort -V | tail -1)/apksigner verify --print-certs android/app/build/outputs/apk/debug/app-debug.apk | grep -i "SHA-1" | sed "s/^/::notice::APKSIG-/"
+
       - name: APK umbenennen
         run: cp android/app/build/outputs/apk/debug/app-debug.apk Taxiruf.apk
 
