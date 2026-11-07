@@ -49,6 +49,97 @@ jobs:
           sed -i 's#</application>#<meta-data android:name="com.google.firebase.messaging.default_notification_icon" android:resource="@drawable/ic_stat_taxi"/><meta-data android:name="com.google.firebase.messaging.default_notification_color" android:resource="@color/ds_red"/><meta-data android:name="com.google.firebase.messaging.default_notification_channel_id" android:value="taxi"/></application>#' $M
           sed -i 's#<application#<uses-permission android:name="android.permission.POST_NOTIFICATIONS"/><uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/><uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/><uses-permission android:name="android.permission.RECORD_AUDIO"/><uses-feature android:name="android.hardware.location.gps" android:required="false"/><application#' $M
 
+      - name: Feste Signatur und App-Updater
+        run: |
+          mkdir -p ~/.android
+          echo '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' | base64 -d > ~/.android/debug.keystore
+          M=android/app/src/main/AndroidManifest.xml
+          sed -i 's#<application#<uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/><application#' $M
+          D=android/app/src/main/java/de/taxiruf25500/customer
+          mkdir -p $D
+          cat > $D/ApkUpdaterPlugin.java <<'EOF_P'
+          package de.taxiruf25500.customer;
+
+          import android.content.Intent;
+          import android.net.Uri;
+          import android.os.Build;
+          import android.provider.Settings;
+          import androidx.core.content.FileProvider;
+          import com.getcapacitor.JSObject;
+          import com.getcapacitor.Plugin;
+          import com.getcapacitor.PluginCall;
+          import com.getcapacitor.PluginMethod;
+          import com.getcapacitor.annotation.CapacitorPlugin;
+          import java.io.File;
+          import java.io.FileOutputStream;
+          import java.io.InputStream;
+          import java.net.HttpURLConnection;
+          import java.net.URL;
+
+          @CapacitorPlugin(name = "ApkUpdater")
+          public class ApkUpdaterPlugin extends Plugin {
+
+              @PluginMethod
+              public void install(final PluginCall call) {
+                  final String url = call.getString("url");
+                  if (url == null || !url.startsWith("https://")) { call.reject("url"); return; }
+                  if (Build.VERSION.SDK_INT >= 26 && !getContext().getPackageManager().canRequestPackageInstalls()) {
+                      Intent s = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, Uri.parse("package:" + getContext().getPackageName()));
+                      s.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                      getContext().startActivity(s);
+                      JSObject r = new JSObject(); r.put("status", "need_permission"); call.resolve(r);
+                      return;
+                  }
+                  new Thread(new Runnable() {
+                      @Override public void run() {
+                          try {
+                              File dir = new File(getContext().getCacheDir(), "update"); dir.mkdirs();
+                              File[] old = dir.listFiles(); if (old != null) for (File f : old) f.delete();
+                              File out = new File(dir, "Taxiruf.apk");
+                              HttpURLConnection c = (HttpURLConnection) new URL(url).openConnection();
+                              c.setInstanceFollowRedirects(true); c.setConnectTimeout(20000); c.setReadTimeout(30000);
+                              c.connect();
+                              if (c.getResponseCode() != 200) throw new Exception("HTTP " + c.getResponseCode());
+                              long total = c.getContentLengthLong(); long got = 0; int last = -1;
+                              InputStream in = c.getInputStream(); FileOutputStream fo = new FileOutputStream(out);
+                              byte[] b = new byte[65536]; int n;
+                              while ((n = in.read(b)) > 0) {
+                                  fo.write(b, 0, n); got += n;
+                                  if (total > 0) { int p = (int) (got * 100 / total); if (p != last) { last = p; JSObject e = new JSObject(); e.put("percent", p); notifyListeners("progress", e); } }
+                              }
+                              fo.close(); in.close();
+                              if (out.length() < 1000000) throw new Exception("Datei zu klein");
+                              Uri uri = FileProvider.getUriForFile(getContext(), getContext().getPackageName() + ".fileprovider", out);
+                              Intent i = new Intent(Intent.ACTION_VIEW);
+                              i.setDataAndType(uri, "application/vnd.android.package-archive");
+                              i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_ACTIVITY_NEW_TASK);
+                              getContext().startActivity(i);
+                              JSObject r = new JSObject(); r.put("status", "installing"); call.resolve(r);
+                          } catch (Exception e) {
+                              call.reject(String.valueOf(e.getMessage()));
+                          }
+                      }
+                  }).start();
+              }
+          }
+          EOF_P
+          cat > $D/MainActivity.java <<'EOF_M'
+          package de.taxiruf25500.customer;
+
+          import android.os.Bundle;
+          import com.getcapacitor.BridgeActivity;
+
+          public class MainActivity extends BridgeActivity {
+              @Override
+              public void onCreate(Bundle savedInstanceState) {
+                  registerPlugin(ApkUpdaterPlugin.class);
+                  super.onCreate(savedInstanceState);
+              }
+          }
+          EOF_M
+          mkdir -p android/app/src/main/res/xml
+          echo '<?xml version="1.0" encoding="utf-8"?><paths xmlns:android="http://schemas.android.com/apk/res/android"><external-path name="my_images" path="."/><cache-path name="my_cache_images" path="."/></paths>' > android/app/src/main/res/xml/file_paths.xml
+
       - name: Debug-APK bauen
         working-directory: android
         run: ./gradlew assembleDebug --no-daemon
