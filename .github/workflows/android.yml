@@ -20,7 +20,7 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - name: Abhängigkeiten installieren
+      - name: Install
         run: npm install --no-audit --no-fund
 
       - name: Android-Projekt erzeugen
@@ -30,11 +30,13 @@ jobs:
 
       - name: Symbol und Version
         run: |
-          if [ -f resources/icon.png ]; then
+          if [ -f icon.png ]; then
+            mkdir -p resources
+            cp icon*.png resources/
             npm install --no-save @capacitor/assets
             npx capacitor-assets generate --android || true
           fi
-          sed -i "s/versionCode 1/versionCode ${{ github.run_number }}/; s/versionName \"1.0\"/versionName \"1.0.${{ github.run_number }}\"/" android/app/build.gradle
+          sed -i 's/versionCode 1/versionCode '$GITHUB_RUN_NUMBER'/' android/app/build.gradle
 
       - name: Debug-APK bauen
         working-directory: android
