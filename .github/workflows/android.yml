@@ -15,7 +15,7 @@ jobs:
         env:
           KS: ${{ secrets.DEBUG_KEYSTORE_B64 }}
         run: |
-          if [ -n "$KS" ]; then mkdir -p ~/.android; echo "$KS" | base64 -d > ~/.android/debug.keystore; echo "Feste Signatur aktiv"; else echo "KEIN Secret DEBUG_KEYSTORE_B64"; fi
+          if [ -n "$KS" ]; then mkdir -p ~/.android; echo "$KS" | base64 -d > ~/.android/debug.keystore; echo "Feste Signatur aktiv"; keytool -list -keystore ~/.android/debug.keystore -storepass android | grep -i "fingerprint" | sed "s/^/::notice::KEYSTORE-/"; else echo "KEIN Secret DEBUG_KEYSTORE_B64"; fi
 
       - uses: actions/setup-node@v4
         with:
@@ -173,11 +173,7 @@ jobs:
 
       - name: Debug-APK bauen
         working-directory: android
-        run: ./gradlew assembleDebug --no-daemon
-
-      - name: Signatur anzeigen
-        run: |
-          keytool -printcert -jarfile android/app/build/outputs/apk/debug/app-debug.apk | grep SHA1 | sed "s/^/::notice::APK-/"
+        run: ./gradlew assembleDebug --no-daemon -Pandroid.injected.signing.store.file=$HOME/.android/debug.keystore -Pandroid.injected.signing.store.password=android -Pandroid.injected.signing.key.alias=androiddebugkey -Pandroid.injected.signing.key.password=android
 
       - name: APK umbenennen
         run: cp android/app/build/outputs/apk/debug/app-debug.apk Taxiruf.apk
