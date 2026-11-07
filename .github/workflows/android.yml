@@ -11,6 +11,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Feste Debug-Signatur
+        env:
+          KS: ${{ secrets.DEBUG_KEYSTORE_B64 }}
+        run: |
+          if [ -n "$KS" ]; then mkdir -p ~/.android; echo "$KS" | base64 -d > ~/.android/debug.keystore; echo "Feste Signatur aktiv"; else echo "KEIN Secret DEBUG_KEYSTORE_B64"; fi
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
