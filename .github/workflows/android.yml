@@ -47,7 +47,7 @@ jobs:
           if [ -f ic_stat_taxi.png ]; then cp ic_stat_taxi.png $R/drawable/ic_stat_taxi.png; fi
           echo '<?xml version="1.0" encoding="utf-8"?><resources><color name="ds_red">#C8102E</color></resources>' > $R/values/ds_colors.xml
           sed -i 's#</application>#<meta-data android:name="com.google.firebase.messaging.default_notification_icon" android:resource="@drawable/ic_stat_taxi"/><meta-data android:name="com.google.firebase.messaging.default_notification_color" android:resource="@color/ds_red"/><meta-data android:name="com.google.firebase.messaging.default_notification_channel_id" android:value="taxi"/></application>#' $M
-          sed -i 's#<application#<uses-permission android:name="android.permission.POST_NOTIFICATIONS"/><application#' $M
+          sed -i 's#<application#<uses-permission android:name="android.permission.POST_NOTIFICATIONS"/><uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/><uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/><uses-permission android:name="android.permission.RECORD_AUDIO"/><uses-feature android:name="android.hardware.location.gps" android:required="false"/><application#' $M
 
       - name: Debug-APK bauen
         working-directory: android
