@@ -175,6 +175,10 @@ jobs:
         working-directory: android
         run: ./gradlew assembleDebug --no-daemon
 
+      - name: Signatur anzeigen
+        run: |
+          keytool -printcert -jarfile android/app/build/outputs/apk/debug/app-debug.apk | grep SHA1 | sed "s/^/::notice::APK-/"
+
       - name: APK umbenennen
         run: cp android/app/build/outputs/apk/debug/app-debug.apk Taxiruf.apk
 
