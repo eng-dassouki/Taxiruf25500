@@ -1,0 +1,31 @@
+{
+  "appId": "de.taxiruf25500.customer",
+  "appName": "Taxiruf 25500",
+  "webDir": "www",
+  "backgroundColor": "#fbf4f5",
+  "appendUserAgent": "TaxirufApp",
+  "server": {
+    "url": "https://taxi-muenster.de/booking/",
+    "cleartext": false,
+    "allowNavigation": [
+      "taxi-muenster.de",
+      "*.taxi-muenster.de",
+      "*.openstreetmap.org",
+      "dassouki.de"
+    ]
+  },
+  "android": {
+    "allowMixedContent": false
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 800,
+      "backgroundColor": "#fbf4f5",
+      "showSpinner": false
+    },
+    "StatusBar": {
+      "style": "LIGHT",
+      "backgroundColor": "#fbf4f5"
+    }
+  }
+}
