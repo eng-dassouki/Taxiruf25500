@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "855370674816",
+    "project_id": "taxiruf-8w5ly8",
+    "storage_bucket": "taxiruf-8w5ly8.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:855370674816:android:dafa8d0543401715d7ac65",
+        "android_client_info": {
+          "package_name": "de.taxiruf25500.customer"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6Ysoi8csfTjIBvNLcX4jquJyfh3ppvEE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
