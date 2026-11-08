@@ -1,20 +1,2 @@
-{
-  "name": "taxiruf-25500-app",
-  "version": "1.0.0",
-  "private": true,
-  "description": "Taxiruf 25500 - Kunden-App",
-  "dependencies": {
-    "@capacitor-community/speech-recognition": "^6.0.1",
-    "@capacitor/android": "^6.1.2",
-    "@capacitor/app": "^6.0.1",
-    "@capacitor/core": "^6.1.2",
-    "@capacitor/geolocation": "^6.0.1",
-    "@capacitor/push-notifications": "^6.0.3",
-    "@capacitor/splash-screen": "^6.0.2",
-    "@capacitor/status-bar": "^6.0.1",
-    "@codetrix-studio/capacitor-google-auth": "3.4.0-rc.4"
-  },
-  "devDependencies": {
-    "@capacitor/cli": "^6.1.2"
-  }
-}
+{"name":"dassouki-funk-lite","version":"1.0.0","private":true,"description":"Dassouki Funk Lite – Funker-App (Android) um die PWA mit Anruf-Erkennung",
+"dependencies":{"@capacitor/android":"^6.1.2","@capacitor/core":"^6.1.2"},"devDependencies":{"@capacitor/assets":"^3.0.5","@capacitor/cli":"^6.1.2"}}
